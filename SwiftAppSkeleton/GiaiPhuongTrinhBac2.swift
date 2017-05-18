@@ -25,17 +25,26 @@ class GiaiPhuongTrinhBac2: UIViewController {
     var a : Double!
     var b : Double!
     var c : Double!
+    var count = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         
     }
+   
     func nhapdauvao() {
-        nhap = tinhtoan()
-        a = Double(txt_so1.text!)!
-        b = Double(txt_so2.text!)!
-        c = Double(txt_so3.text!)!
+        
+        a = Double(txt_so1.text!)
+        b = Double(txt_so2.text!)
+        c = Double(txt_so3.text!)
+        if (a == nil || b == nil || c == nil){
+            lbl_kq1.text = String("ham khong nhan chu")
+        }else{
+            
+            duaraketqua()
+        }
     }
     func duaraketqua() {
         duraketqua = tinhtoan()
@@ -46,11 +55,18 @@ class GiaiPhuongTrinhBac2: UIViewController {
         }catch PhuongTrinhBac2Error.voNghiem{
             lbl_kq1.text = String("phuong trinh vo nghiem")
         }catch PhuongTrinhBac2Error.aBangKhong {
-            lbl_kq1.text = String("a = 0.0 phuong trinh tuyen tinh")
-            lbl_kq2.text = String("a = 0.0 phuong trinh tuyen tinh")
+            lbl_kq1.text = ("a = 0.0 phuong trinh tuyen tinh")
+            lbl_kq2.text = ("a = 0.0 phuong trinh tuyen tinh")
         }catch {
             lbl_kq1.text = String("khong ro loi")
         }
+    }
+    func resset()  {
+        lbl_kq1.text = ""
+        lbl_kq2.text = ""
+        txt_so1.text = ""
+        txt_so2.text = ""
+        txt_so3.text = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,8 +76,13 @@ class GiaiPhuongTrinhBac2: UIViewController {
     
 
     @IBAction func acc_ketqua(_ sender: Any) {
+        if (count == 0){
         nhapdauvao()
-        duaraketqua()
+            count = 1
+        }else if(count == 1){
+            resset()
+            count = 0
+        }
     }
 
 
